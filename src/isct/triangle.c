@@ -266,7 +266,11 @@
 /*   Floating-Point Arithmetic and Fast Robust Geometric Predicates" (also   */
 /*   available as Section 6.6 of my dissertation).                           */
 
-/* #define CPU86 */
+#if _WIN32
+#define CPU86
+#else
+#endif
+
 /* #define LINUX */
 
 #define INEXACT /* Nothing */
@@ -947,7 +951,7 @@ int minus1mod3[3] = {2, 0, 1};
 /*   boundaries, so the two least significant bits of (otri).tri are zero.   */
 
 #define encode(otri)                                                          \
-  (triangle) ((unsigned long) (otri).tri | (unsigned long) (otri).orient)
+  (triangle) ((size_t) (otri).tri | (size_t) (otri).orient)
 
 /* The following handle manipulation primitives are all described by Guibas  */
 /*   and Stolfi.  However, Guibas and Stolfi use an edge-based data          */
@@ -1111,16 +1115,16 @@ int minus1mod3[3] = {2, 0, 1};
 
 #define infect(otri)                                                          \
   (otri).tri[6] = (triangle)                                                  \
-                    ((unsigned long) (otri).tri[6] | (unsigned long) 2l)
+                    ((size_t) (otri).tri[6] | (size_t) 2l)
 
 #define uninfect(otri)                                                        \
   (otri).tri[6] = (triangle)                                                  \
-                    ((unsigned long) (otri).tri[6] & ~ (unsigned long) 2l)
+                    ((size_t) (otri).tri[6] & ~ (size_t) 2l)
 
 /* Test a triangle for viral infection.                                      */
 
 #define infected(otri)                                                        \
-  (((unsigned long) (otri).tri[6] & (unsigned long) 2l) != 0l)
+  (((size_t) (otri).tri[6] & (size_t) 2l) != 0l)
 
 /* Check or set a triangle's attributes.                                     */
 
@@ -1167,7 +1171,7 @@ int minus1mod3[3] = {2, 0, 1};
 /*   boundaries, so the least significant bit of (osub).ss is zero.          */
 
 #define sencode(osub)                                                         \
-  (subseg) ((unsigned long) (osub).ss | (unsigned long) (osub).ssorient)
+  (subseg) ((size_t) (osub).ss | (size_t) (osub).ssorient)
 
 /* ssym() toggles the orientation of a subsegment.                           */
 
@@ -3295,7 +3299,8 @@ struct behavior *b;
   int increment;
   int meshnumber;
 #endif /* not TRILIBRARY */
-  int i, j, k;
+  int k;
+  int i, j;
   char workstring[FILENAMESIZE];
 
   b->poly = b->refine = b->quality = 0;
@@ -4128,7 +4133,7 @@ struct memorypool *pool;
 
 {
   VOID *newitem;
-  unsigned long alignptr;
+  size_t alignptr;
 
   /* Stop upon exhausting the list of items. */
   if (pool->pathitem == pool->nextitem) {
@@ -4140,11 +4145,11 @@ struct memorypool *pool;
     /* Find the next block. */
     pool->pathblock = (VOID **) *(pool->pathblock);
     /* Find the first item in the block.  Increment by the size of (VOID *). */
-    alignptr = (unsigned long) (pool->pathblock + 1);
+    alignptr = (size_t) (pool->pathblock + 1);
     /* Align with item on an `alignbytes'-byte boundary. */
     pool->pathitem = (VOID *)
-      (alignptr + (unsigned long) pool->alignbytes -
-       (alignptr % (unsigned long) pool->alignbytes));
+      (alignptr + (size_t) pool->alignbytes -
+       (alignptr % (size_t) pool->alignbytes));
     /* Set the number of items left in the current block. */
     pool->pathitemsleft = pool->itemsperblock;
   }
@@ -4196,16 +4201,16 @@ int subsegbytes;
 #endif /* not ANSI_DECLARATORS */
 
 {
-  unsigned long alignptr;
+	size_t alignptr;
 
   /* Set up `dummytri', the `triangle' that occupies "outer space." */
   m->dummytribase = (triangle *) trimalloc(trianglebytes +
                                            m->triangles.alignbytes);
   /* Align `dummytri' on a `triangles.alignbytes'-byte boundary. */
-  alignptr = (unsigned long) m->dummytribase;
+  alignptr = (size_t) m->dummytribase;
   m->dummytri = (triangle *)
-    (alignptr + (unsigned long) m->triangles.alignbytes -
-     (alignptr % (unsigned long) m->triangles.alignbytes));
+    (alignptr + (size_t) m->triangles.alignbytes -
+     (alignptr % (size_t) m->triangles.alignbytes));
   /* Initialize the three adjoining triangles to be "outer space."  These  */
   /*   will eventually be changed by various bonding operations, but their */
   /*   values don't really matter, as long as they can legally be          */
@@ -4225,10 +4230,10 @@ int subsegbytes;
     m->dummysubbase = (subseg *) trimalloc(subsegbytes +
                                            m->subsegs.alignbytes);
     /* Align `dummysub' on a `subsegs.alignbytes'-byte boundary. */
-    alignptr = (unsigned long) m->dummysubbase;
+    alignptr = (size_t) m->dummysubbase;
     m->dummysub = (subseg *)
-      (alignptr + (unsigned long) m->subsegs.alignbytes -
-       (alignptr % (unsigned long) m->subsegs.alignbytes));
+      (alignptr + (size_t) m->subsegs.alignbytes -
+       (alignptr % (size_t) m->subsegs.alignbytes));
     /* Initialize the two adjoining subsegments to be the omnipresent      */
     /*   subsegment.  These will eventually be changed by various bonding  */
     /*   operations, but their values don't really matter, as long as they */
@@ -4585,7 +4590,7 @@ int number;
 {
   VOID **getblock;
   char *foundvertex;
-  unsigned long alignptr;
+  size_t alignptr;
   int current;
 
   getblock = m->vertices.firstblock;
@@ -4602,9 +4607,9 @@ int number;
   }
 
   /* Now find the right vertex. */
-  alignptr = (unsigned long) (getblock + 1);
-  foundvertex = (char *) (alignptr + (unsigned long) m->vertices.alignbytes -
-                          (alignptr % (unsigned long) m->vertices.alignbytes));
+  alignptr = (size_t) (getblock + 1);
+  foundvertex = (char *) (alignptr + (size_t) m->vertices.alignbytes -
+                          (alignptr % (size_t) m->vertices.alignbytes));
   return (vertex) (foundvertex + m->vertices.itembytes * (number - current));
 }
 
@@ -7648,7 +7653,7 @@ struct otri *searchtri;
   char *firsttri;
   struct otri sampletri;
   vertex torg, tdest;
-  unsigned long alignptr;
+  size_t alignptr;
   REAL searchdist, dist;
   REAL ahead;
   long samplesperblock, totalsamplesleft, samplesleft;
@@ -7720,11 +7725,11 @@ struct otri *searchtri;
       population = totalpopulation;
     }
     /* Find a pointer to the first triangle in the block. */
-    alignptr = (unsigned long) (sampleblock + 1);
+    alignptr = (size_t) (sampleblock + 1);
     firsttri = (char *) (alignptr +
-                         (unsigned long) m->triangles.alignbytes -
+                         (size_t) m->triangles.alignbytes -
                          (alignptr %
-                          (unsigned long) m->triangles.alignbytes));
+                          (size_t) m->triangles.alignbytes));
 
     /* Choose `samplesleft' randomly sampled triangles in this block. */
     do {

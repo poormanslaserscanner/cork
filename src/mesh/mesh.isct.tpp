@@ -628,7 +628,7 @@ public:
         Quantization::callibrate(maxMag);
         
         // and use vertex auxiliary data to store quantized vertex coordinates
-        uint N = TopoCache::mesh->verts.size();
+        uint N = uint(TopoCache::mesh->verts.size());
         quantized_coords.resize(N);
         uint write = 0;
         TopoCache::verts.for_each([&](Vptr v) {

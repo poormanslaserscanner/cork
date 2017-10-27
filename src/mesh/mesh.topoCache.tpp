@@ -107,7 +107,7 @@ private:
 template<class VertData, class TriData> inline
 Vptr Mesh<VertData, TriData>::TopoCache::newVert()
 {
-    uint        ref         = mesh->verts.size();
+    uint        ref         = uint(mesh->verts.size());
                 mesh->verts.push_back(VertData());
     Vptr        v           = verts.alloc(); // cache.verts
                 v->ref      = ref;
@@ -122,7 +122,7 @@ Eptr Mesh<VertData, TriData>::TopoCache::newEdge()
 template<class VertData, class TriData> inline
 Tptr Mesh<VertData, TriData>::TopoCache::newTri()
 {
-    uint        ref         = mesh->tris.size();
+    uint        ref         = uint(mesh->tris.size());
                 mesh->tris.push_back(Tri());
     Tptr        t           = tris.alloc(); // cache.tris
                 t->ref      = ref;

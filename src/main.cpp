@@ -46,8 +46,8 @@ using std::ostream;
 void file2corktrimesh(
     const Files::FileMesh &in, CorkTriMesh *out
 ) {
-    out->n_vertices = in.vertices.size();
-    out->n_triangles = in.triangles.size();
+    out->n_vertices = uint(in.vertices.size());
+    out->n_triangles = uint(in.triangles.size());
     
     out->triangles = new uint[(out->n_triangles) * 3];
     out->vertices  = new float[(out->n_vertices) * 3];
@@ -59,9 +59,9 @@ void file2corktrimesh(
     }
     
     for(uint i=0; i<out->n_vertices; i++) {
-        (out->vertices)[3*i+0] = in.vertices[i].pos.x;
-        (out->vertices)[3*i+1] = in.vertices[i].pos.y;
-        (out->vertices)[3*i+2] = in.vertices[i].pos.z;
+        (out->vertices)[3*i+0] = float(in.vertices[i].pos.x);
+        (out->vertices)[3*i+1] = float(in.vertices[i].pos.y);
+        (out->vertices)[3*i+2] = float(in.vertices[i].pos.z);
     }
 }
 

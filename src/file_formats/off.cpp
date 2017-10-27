@@ -89,8 +89,8 @@ int writeOFF(string filename, FileMesh *data)
     out << "OFF" << endl;
     
     // numvertices, numfaces, numedges=0
-    int numvertices = data->vertices.size();
-    int numfaces = data->triangles.size();
+    int numvertices = int(data->vertices.size());
+    int numfaces = int(data->triangles.size());
     out << numvertices << ' ' << numfaces << ' ' << 0 << endl;
     
     // vertex data

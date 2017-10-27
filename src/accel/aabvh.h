@@ -62,7 +62,7 @@ public:
         for(uint k=0; k<tmpids.size(); k++)
             tmpids[k] = k;
         
-        root = constructTree(0, tmpids.size(), 2);
+        root = constructTree(0, uint(tmpids.size()), 2);
     }
     ~AABVH() {}
     

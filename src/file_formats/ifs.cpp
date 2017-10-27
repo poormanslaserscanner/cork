@@ -138,9 +138,9 @@ inline bool read_vertex(ifstream &in, Vec3d &data)
 inline bool write_vertex(ofstream &out, const Vec3d &data)
 {
     // data is coerced from double to float automatically here
-    bool result =   write_float32(out, data.x) &&
-                    write_float32(out, data.y) &&
-                    write_float32(out, data.z);
+    bool result =   write_float32(out, float32(data.x)) &&
+                    write_float32(out, float32(data.y)) &&
+                    write_float32(out, float32(data.z));
     return result;
 }
 
@@ -183,7 +183,7 @@ inline bool write_texturecoord(ofstream &out, const TextureCoord &data)
 // do not advance the file pointer
 bool checkString(ifstream &in, string toCheck)
 {
-    uint32 length = toCheck.length()+1; // +1 for null-terminator
+    uint32 length = uint32(toCheck.length())+1; // +1 for null-terminator
     uint32 read_length;
     if(!read_uint32(in, read_length)) return false;
     if(read_length != length) return false;
@@ -221,7 +221,7 @@ bool readString(ifstream &in, string &data)
 
 bool writeString(ofstream &out, const string &data)
 {
-    uint32 length = data.length()+1;
+    uint32 length = uint32(data.length())+1;
     if(!write_uint32(out, length)) return false;
     
     out.write(data.c_str(), length);
@@ -316,7 +316,7 @@ int writeIFS(string filename, FileMesh *data)
     
     // VERTICES
     if(!writeString(out,"VERTICES")) return 1;
-    uint32 num_vertices = data->vertices.size();
+    uint32 num_vertices = uint32(data->vertices.size());
     if(!write_uint32(out, num_vertices)) return 1;
     for(const auto &v : data->vertices) {
         if(!write_vertex(out, v.pos)) return 1;
@@ -324,7 +324,7 @@ int writeIFS(string filename, FileMesh *data)
     
     // TRIANGLES
     if(!writeString(out,"TRIANGLES")) return 1;
-    uint32 num_tris = data->triangles.size();
+    uint32 num_tris = uint32(data->triangles.size());
     if(!write_uint32(out, num_tris)) return 1;
     for(const auto &tri : data->triangles) {
         if(!write_triangle(out, tri)) return 1;

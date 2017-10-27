@@ -116,16 +116,10 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\src\mesh\mesh.bool.tpp">
-      <Filter>Header Files\mesh</Filter>
-    </None>
     <None Include="..\..\src\mesh\mesh.isct.tpp">
       <Filter>Header Files\mesh</Filter>
     </None>
     <None Include="..\..\src\mesh\mesh.remesh.tpp">
-      <Filter>Header Files\mesh</Filter>
-    </None>
-    <None Include="..\..\src\mesh\mesh.topoCache.tpp">
       <Filter>Header Files\mesh</Filter>
     </None>
     <None Include="..\..\src\mesh\mesh.tpp">
@@ -133,6 +127,12 @@
     </None>
     <None Include="..\..\src\rawmesh\rawMesh.tpp">
       <Filter>Header Files\rawmesh</Filter>
+    </None>
+    <None Include="..\..\src\mesh\mesh.bool.tpp">
+      <Filter>Header Files\mesh</Filter>
+    </None>
+    <None Include="..\..\src\mesh\mesh.topoCache.tpp">
+      <Filter>Header Files\mesh</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>

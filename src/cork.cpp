@@ -157,8 +157,8 @@ void corkMesh2CorkTriMesh(
 ) {
     RawCorkMesh raw = mesh_in->raw();
     
-    out->n_triangles = raw.triangles.size();
-    out->n_vertices  = raw.vertices.size();
+    out->n_triangles = uint(raw.triangles.size());
+    out->n_vertices  = uint(raw.vertices.size());
     
     out->triangles = new uint[(out->n_triangles) * 3];
     out->vertices  = new float[(out->n_vertices) * 3];
@@ -170,9 +170,9 @@ void corkMesh2CorkTriMesh(
     }
     
     for(uint i=0; i<out->n_vertices; i++) {
-        (out->vertices)[3*i+0] = raw.vertices[i].pos.x;
-        (out->vertices)[3*i+1] = raw.vertices[i].pos.y;
-        (out->vertices)[3*i+2] = raw.vertices[i].pos.z;
+        (out->vertices)[3*i+0] = float(raw.vertices[i].pos.x);
+        (out->vertices)[3*i+1] = float(raw.vertices[i].pos.y);
+        (out->vertices)[3*i+2] = float(raw.vertices[i].pos.z);
     }
 }
 

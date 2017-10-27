@@ -112,10 +112,10 @@ RawMesh<VertData,TriData> Mesh<VertData,TriData>::raw() const
 template<class VertData, class TriData>
 void Mesh<VertData,TriData>::disjointUnion(const Mesh &cp)
 {
-    uint oldVsize = verts.size();
-    uint oldTsize = tris.size();
-    uint cpVsize  = cp.verts.size();
-    uint cpTsize  = cp.tris.size();
+    uint oldVsize = uint(verts.size());
+    uint oldTsize = uint(tris.size());
+    uint cpVsize  = uint(cp.verts.size());
+    uint cpTsize  = uint(cp.tris.size());
     uint newVsize = oldVsize + cpVsize;
     uint newTsize = oldTsize + cpTsize;
     

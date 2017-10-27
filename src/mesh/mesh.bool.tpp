@@ -179,7 +179,7 @@ void Mesh<VertData,TriData>::BoolProblem::doSetup(
     // of the two input meshes.
     // These components are not necessarily uniformly inside or outside
     // of the other operand mesh.
-    UnionFind uf(mesh->tris.size());
+    UnionFind uf(uint(mesh->tris.size()));
     for_ecache([&](uint, uint, bool, const ShortVec<uint, 2> &tids) {
         uint tid0 = tids[0];
         for(uint k=1; k<tids.size(); k++)
@@ -192,7 +192,7 @@ void Mesh<VertData,TriData>::BoolProblem::doSetup(
     for(uint i=0; i<mesh->tris.size(); i++) {
         uint ufid = uf.find(i);
         if(uq_ids[ufid] == uint(-1)) { // unassigned
-            uint N = components.size();
+            uint N = uint(components.size());
             components.push_back(std::vector<uint>());
             
             uq_ids[ufid] = uq_ids[i] = N;
