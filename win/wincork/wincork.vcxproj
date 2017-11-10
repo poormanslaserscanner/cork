@@ -116,7 +116,7 @@
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <AdditionalIncludeDirectories>..\..\..\win\mpir\dll\x64\Release\;..\..\src;..\..\src\accel;..\..\src\file_formats;..\..\src\isct;..\..\src\math;..\..\src\mesh;..\..\src\rawmesh;..\..\src\util;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(PMLS_INSTALL_DIR)\mpir;..\..\src;..\..\src\accel;..\..\src\file_formats;..\..\src\isct;..\..\src\math;..\..\src\mesh;..\..\src\rawmesh;..\..\src\util;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>NO_TIMER;_CRT_SECURE_NO_WARNINGS;_USE_MATH_DEFINES;NOMINMAX;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <TreatWarningAsError>false</TreatWarningAsError>
     </ClCompile>
@@ -125,7 +125,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalDependencies>mpir.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>..\..\..\win\mpir\dll\x64\Release</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(PMLS_INSTALL_DIR)\mpir</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
